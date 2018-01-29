@@ -18,16 +18,3 @@
 (defmethod perform ((o test-op) (c (eql (find-system 'puri))))
   (oos 'load-op 'puri-tests)
   (oos 'test-op 'puri-tests))
-
-(defsystem puri-tests
-    :depends-on (:puri :ptester) 
-    :components
-    ((:file "tests")))
-
-(defmethod perform ((o test-op) (c (eql (find-system 'puri-tests))))
-  (or (funcall (intern (symbol-name '#:do-tests)
-		       (find-package :puri-tests)))
-      (error "test-op failed")))
-
-(defmethod operation-done-p ((o test-op) (c (eql (find-system 'puri-tests))))
-  (values nil))
